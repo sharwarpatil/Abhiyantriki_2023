@@ -1,0 +1,13 @@
+#txt1,
+#txt2 {
+  -webkit-text-stroke: 2px rgb(255, 255, 255);
+  margin: 0 auto;
+}
+
+#txt {
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  margin-top: -280px;
+  padding-right: 15px;
+}

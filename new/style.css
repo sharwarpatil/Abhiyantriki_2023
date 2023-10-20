@@ -1,0 +1,197 @@
+@media (min-width: 1024px) {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #080429;
+    }
+    
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw !important;
+        height: 100vh !important;
+    }
+    
+    .logos {
+        position: absolute;
+        width: 100vw;
+        top: 0;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    #logos-right {
+        display: flex table-column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .logos img {
+        margin: 10px;
+    }
+    
+    #abhiyantriki {
+        width: 12vw;
+        height: auto;
+    }
+    
+    #somaiya {
+        width: 10vw;
+        height: auto;
+    }
+    
+    #trust {
+        width: 5vw;
+        height: auto;
+    }
+    
+    #stuco {
+        width: 4vw;
+        height: auto;
+    }
+    
+    .content {
+        z-index: 2;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: -100px;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    .socials {
+        display: flex;
+        flex-direction: column;
+        z-index: 4;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        left: 0;
+        top: 25%;
+    }
+    
+    .socials img {
+        width: 3vw;
+        height: auto;
+        margin: 10px;
+    }
+    
+    .mobile {
+        display: none;
+    }
+}
+
+/* small screens */
+@media (max-width: 1024px) {
+    *{
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        /* min-width: 100%;
+        min-height: 100%; */
+    }
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #080429;
+    }
+    .socials {
+        display: flex;
+        bottom: 50px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        position: fixed;
+        /* height: ; */
+        z-index: 2;
+        padding: 2%;
+    }
+    .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        margin-top: 15vh;
+    }
+    .logos {
+        position: absolute;
+        width: 100vw;
+        top: 0;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+    }
+    .logos img {
+        margin: 5px;
+    }
+    #abhiyantriki {
+        width: 30vw;
+        height: auto;
+    }
+    #somaiya {
+        width: 20vw;
+        height: auto;
+    }
+    #trust {
+        width: 10vw;
+        height: auto;
+    }
+    #stuco {
+        width: 8vw;
+        height: auto;
+    }
+
+    .socials img {
+        width: 30px;
+        margin: 10px;
+    }
+    main {
+        display: none;
+    }
+    #startGameButton {
+        display: none;
+    }
+    @font-face {
+        font-family: 'BebasNeue-Regular';
+        src: url('./BebasNeue-Regular.ttf');
+    }
+    .mobile {
+        z-index: 2;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-family: 'BebasNeue-Regular';
+        font-size: 5vh;
+        color: white;
+    }
+    #playgame {
+        border-radius: 50px;
+        padding: 8px;
+        padding-left: 30px;
+        padding-right: 30px;
+        font-family: "BebasNeue-Regular";
+        font-size: 3vh;
+        margin-top: 5vh;
+        
+        background-color: #ffffff;
+    }
+}

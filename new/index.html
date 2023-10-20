@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abhiyantriki 2023</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="icon" href="./abhiyantriki.png">
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.7.0/lib/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+  <script>
+    let customFont;
+
+    function preload() {
+      customFont = loadFont("./BebasNeue-Regular.ttf");
+    }
+
+    const Engine = Matter.Engine;
+    const World = Matter.World;
+    const Bodies = Matter.Bodies;
+    const Body = Matter.Body;
+
+    let engine;
+    let words = [];
+    let ground, wallLeft, wallRight;
+    let wordsToDisplay = [
+      "Abhiyantriki",
+      "2023",
+      "KJSCE",
+      "Abhiyantriki",
+      "Somaiya",
+      "Students'",
+      "Council",
+      "4 & 5 Oct",
+      "Embracing",
+      "Evolution",
+      "#EmbracingEvolution",
+      "Students' Council",
+      "Abhiyantriki 2023",
+      "4 & 5 Oct, 2023",
+      "KJSCE STUCO",
+      "GAME",
+    ];
+
+    function setup() {
+      createCanvas(windowWidth, windowHeight - 60);
+      engine = Engine.create();
+      // Engine.run(engine);
+
+      ground = Bodies.rectangle(width / 2, height - 20, width, 10, {
+        isStatic: true,
+      });
+      wallLeft = Bodies.rectangle(0, height / 2, 10, height, {
+        isStatic: true,
+      });
+      wallRight = Bodies.rectangle(width, height / 2, 10, height, {
+        isStatic: true,
+      });
+
+      World.add(engine.world, [ground, wallLeft, wallRight]);
+
+      for (let i = 0; i < wordsToDisplay.length; i++) {
+        words.push(new Word(random(width), -200, wordsToDisplay[i]));
+      }
+    }
+
+    function draw() {
+      background("#080429");
+      Engine.update(engine);
+
+      for (let word of words) {
+        if (word.isInteractive) {
+          if (word.isMouseOver()) {
+            // Change cursor style
+            document.body.style.cursor = "pointer";
+          } else {
+            document.body.style.cursor = "default";
+          }
+
+          if (word.isMouseOver() && mouseIsPressed) {
+            // Perform action for interactive words on click
+            // Here you can add code to redirect or perform other actions
+            if (word.word === "GAME") {
+              window.location.href = "game.html"; // replace "game.html" with the URL of the page you want to redirect to
+            }
+          }
+        }
+
+        word.show();
+      }
+    }
+
+
+    class Word {
+      constructor(x, y, word) {
+        this.body = Bodies.rectangle(x, y, word.length * 20, 40);
+        this.word = word;
+        this.isInteractive = word === "GAME"; // Set to false for "GAME" word
+        World.add(engine.world, this.body);
+      }
+
+      // show() {
+      //   let pos = this.body.position;
+      //   let angle = this.body.angle;
+
+      //   push();
+      //   translate(pos.x, pos.y);
+      //   rotate(angle);
+      //   rectMode(CENTER);
+      //   fill("rgba(255, 255, 255, 0.8)");
+      //   stroke("#0f0f0f");
+      //   strokeWeight(3);
+      //   rect(0, 0, this.word.length * 25 + 80, 75, 60);
+      //   noStroke();
+      //   fill("#131313");
+      //   textFont(customFont);
+      //   textSize(30);
+      //   textAlign(CENTER, CENTER);
+      //   text(this.word.toUpperCase(), 0, 0);
+      //   pop();
+      // }
+
+      show() {
+        let pos = this.body.position;
+        let angle = this.body.angle;
+
+        push();
+        translate(pos.x, pos.y);
+        rotate(angle);
+        rectMode(CENTER);
+        fill("rgba(255, 255, 255, 0.8)");
+        stroke("#0f0f0f");
+        strokeWeight(3);
+
+        // Scale the size of the rectangle based on the window's width
+        let rectWidth = this.word.length * 25 + 80;
+        let rectHeight = 75;
+        if (windowWidth < 500) { // Adjust this value based on your needs
+          rectWidth *= 0; // Scale down the size by 50%
+          rectHeight *= 0; // Scale down the size by 50%
+        }
+        rect(0, 0, rectWidth, rectHeight, 60);
+
+        noStroke();
+        fill("#131313");
+        textFont(customFont);
+
+        // Scale the text size based on the window's width
+        let textSizeValue = 30;
+        if (windowWidth < 500) { // Adjust this value based on your needs
+          textSizeValue *= 0; // Scale down the size by 50%
+        }
+        textSize(textSizeValue);
+
+        textAlign(CENTER, CENTER);
+        text(this.word.toUpperCase(), 0, 0);
+        pop();
+      }
+
+      isMouseOver() {
+        let distance = dist(
+          mouseX,
+          mouseY,
+          this.body.position.x,
+          this.body.position.y
+        );
+        return distance < 50;
+      }
+    }
+
+    function mouseMoved() {
+      for (let word of words) {
+        if (word.word === "GAME") {
+          continue; // Skip interaction for the word "GAME"
+        }
+
+        let distance = dist(
+          mouseX,
+          mouseY,
+          word.body.position.x,
+          word.body.position.y
+        );
+        if (distance < 50) {
+          Body.applyForce(
+            word.body,
+            { x: word.body.position.x, y: word.body.position.y },
+            { x: random(-0.3, 0.3), y: random(-0.3, 0.3) }
+          );
+        }
+      }
+    }
+  </script>
+
+  <button id="startGameButton">Start Game</button>
+
+  <div class="logos">
+    <div id="logos-left">
+      <img id="abhiyantriki" src="./abhiyantriki-2023.png" alt="Abhiyantriki" />
+    </div>
+    <div id="logos-right">
+      <img id="somaiya" src="./somaiyatransparentwhite.png" alt="Somaiya" />
+      <img id="trust" src="./somaiyatrust.png" alt="Trust" />
+      <img id="stuco" src="./stuco-logo.png" alt="STUCO" />
+    </div>
+  </div>
+  <div class="content">
+    <img src="./comingsoon.gif" alt="Abhiyantriki Coming Soon!" />
+  </div>
+  <div class="socials">
+    <a target="_blank" href="https://www.facebook.com/kjsceabhiyantriki/?ref=br_rs"><img
+        src="./socials/facebook_1384005.png" alt=""></a>
+    <a target="_blank" href="https://www.instagram.com/kjscelive/"><img src="./socials/instagram_5968982.png"
+        alt=""></a>
+    <a target="_blank" href="https://twitter.com/kjsabhiyantriki?lang=en"><img src="./socials/twitter_1384017.png"
+        alt=""></a>
+    <a target="_blank" href="https://www.youtube.com/channel/UC7Z32X4uNZ8c31NteK3065g"><img
+        src="./socials/youtube_1384012.png" alt=""></a>
+  </div>
+  <div class="mobile">
+    <p>4 & 5 Oct, 2023</p>
+    <p>#EmbracingEvolution</p>
+    <a href="./game.html"><button  id="playgame">PLAY GAME</button></a>
+    
+  </div>
+</body>
+
+</html>
